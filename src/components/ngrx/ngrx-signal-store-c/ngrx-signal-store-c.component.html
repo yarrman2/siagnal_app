@@ -1,0 +1,12 @@
+<h2>ngrx signal store c!</h2>
+
+@if (store.list()) {
+<ul>
+  @for(item of store.itemsPage(); track item.id) {
+    <li> id: {{item.id}} - title: {{item.title}} </li>
+  }
+</ul>
+<div>
+  <button (click) = "store.nextPage()">Next page</button>
+</div>
+}

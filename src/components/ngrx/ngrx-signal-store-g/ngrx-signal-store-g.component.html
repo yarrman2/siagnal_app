@@ -1,0 +1,46 @@
+<h2>ngrx signal store g!</h2>
+is editing {{store.isEditing()}}
+@if(store.isEditing() && !store.saving()) {
+  <input type="text" [ngModel]="store.editingItemTitle()" (ngModelChange)="changeItem($event)" />
+  <button (click)="save()">Save</button> <button (click)="cancel()">Cancel</button>
+}
+
+@if(store.saving()) {
+  Saving table...
+}
+
+<div>
+  <h4>Filter</h4>
+  <form [formGroup]="form">
+    <input
+      type="string"
+      [formControlName]="'title'"
+    />
+  </form>
+  <button (click)="reloadTable()">Reload Table</button>
+</div>
+
+@if (store.loaded()) {
+<ul>
+  @for(item of elements(); track item.id) {
+    <li>
+      <span>id: {{item.id}} - title: {{item.title}} </span>
+      <span>
+        <button [disabled]="isDiasbledEdit(item.id)" (click)="edit(item.id)" >Edit</button>
+        <button [disabled]="isDiasbledEdit(item.id)" (click)="delete(item.id)">Delete</button>
+      </span>
+    </li>
+  }
+</ul>
+<div>
+  <button (click) = "store.prevPage()" [disabled]="cantPrev()">Prev page</button>
+  {{store.page()}} / {{store.lastPage()}}
+  <button (click) = "store.nextPage()" [disabled]="cantNext()">Next page</button>
+</div>
+} @else {
+  Loading page...
+}
+
+@if(store.lastAction()) {
+  {{store.lastAction()}}
+}

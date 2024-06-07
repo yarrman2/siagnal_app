@@ -1,0 +1,16 @@
+<h2>ngrx signal store e!</h2>
+
+@if (store.loaded()) {
+<ul>
+  @for(item of store.itemsPage.elements(); track item.id) {
+    <li> id: {{item.id}} - title: {{item.title}} </li>
+  }
+</ul>
+<div>
+  <button (click) = "store.prevPage()" [disabled]="store.isFirstPage()">Prev page</button>
+  {{store.page()}} / {{store.lastPage()}}
+  <button (click) = "store.nextPage()" [disabled]="store.isLastPage()">Next page</button>
+</div>
+} @else {
+  Loading page...
+}
